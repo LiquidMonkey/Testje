@@ -1,0 +1,9 @@
+nav.navbar-default{
+	margin-bottom: 0px;
+}
+
+.jumbotron{
+	height: 500px;
+	background: url('../img/koe.jpg') 1%;
+	background-size: cover;
+}
