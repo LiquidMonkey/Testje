@@ -20,6 +20,18 @@
 			header('location: cart.php');
 		}
 
+		if ( $database_config['debug'] ){
+			echo "<pre>";
+			print_r( $_SESSION );
+			echo "</pre>";
+		}
+
+		if ( isset($_SESSION['cart_content'] ) ) {
+			if( strlen( $_SESSION['cart_content'] ) < 1 ){
+				unset( $_SESSION['cart_content'] );
+			}
+		}
+
 		if ( isset($_GET['remove']) ){
 			echo 'Triggered';
 			$_SESSION['cart_content'] = preg_replace('/'.$_GET['pid'].'/', '', $_SESSION['cart_content'], 1);
@@ -28,8 +40,13 @@
 			header('location: cart.php');
 		}
 
-		if(){
-			
+		if( isset($_GET['pid']) && !isset( $_GET['remove'] ) ){
+			if( !isset( $_SESSION['cart_content'] ) ){
+				$_SESSION['cart_content'] = $_GET['pid'];
+			} else {
+				$_SESSION['cart_content'] .= ',';
+				$_SESSION['cart_content'] .= $_GET['pid'];
+			}
 		}
 
 		/*
@@ -70,6 +87,15 @@
 			}
 		}
 		?>
+	</div>
+	<div class="row">
+		<form class="bestelling.php" method="POST">
+			<div class="form-group">
+				<input placeholder="Naam" type="text" name="Naam">
+				<input placeholder="Email" type="email" name="Email">
+				<input class="btn btn-default" type="submit" value="Order">
+			</div>
+		</form>
 	</div>
 </div>
 
