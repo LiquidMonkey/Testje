@@ -2,8 +2,16 @@ nav.navbar-default{
 	margin-bottom: 0px;
 }
 
-.jumbotron{
+#jumbotron{
 	height: 500px;
 	background: url('../img/koe.jpg') 1%;
 	background-size: cover;
+}
+
+.productlisting{
+	box-sizing: border-box;
+	background: #C4D2DD;
+	border-left: 5px solid white;
+	padding-left: 30px;
+	padding-bottom: 15px;
 }

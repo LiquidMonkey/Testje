@@ -1,74 +1,60 @@
 <?php include_once 'includes/header.php';?>
-<?php include 'database.php'; ?>
+<?php include 'includes/database.php'; ?>
+
+<?php
+
+session_start();
+
+if ( isset($_GET['remove']) ){
+	echo 'Triggered';
+	$_SESSION['cart_content'] = preg_replace('/'.$_GET['pid'].'/', '', $_SESSION['cart_content'], 1);
+	$_SESSION['cart_content'] = preg_replace('/,,/', ',', $_SESSION['cart_content'], 1);
+	$_SESSION['cart_content'] = trim( $_SESSION['cart_content'], "," );
+	header('location: cart.php');
+}
+
+if( isset($_GET['pid']) && !isset( $_GET['remove'] ) ){
+	if( !isset( $_SESSION['cart_content'] ) ){
+		$_SESSION['cart_content'] = $_GET['pid'];
+	} else {
+		$_SESSION['cart_content'] .= ',';
+		$_SESSION['cart_content'] .= $_GET['pid'];
+	}
+}
+
+if( isset($_GET['empty']) ){
+	session_destroy();
+	header('location: cart.php');
+}
+
+if ( $database_config['debug'] ){
+	echo "<pre>";
+	print_r( $_SESSION );
+	echo "</pre>";
+}
+
+if ( isset($_SESSION['cart_content'] ) ) {
+	if( strlen( $_SESSION['cart_content'] ) < 1 ){
+		unset( $_SESSION['cart_content'] );
+	}
+}
+?>
 
 <div class="container">
 	<div class="row">
+
 		<h2>Producten in winkelwagen</h2>
+		
 		<?php
-		session_start();
-		if ( isset($_GET['pid']) ){
-			if( isset($_SESSION['cart_content']) ){
-				$_SESSION['cart_content'] = $_GET['pid'];
-			} else {
-				$_SESSION['cart_content'] .= ',';
-				$_SESSION['cart_content'] .= $_GET['pid'];
-			}
-		}
 
-		if( isset($_GET['empty']) ){
-			session_destroy();
-			header('location: cart.php');
-		}
-
-		if ( $database_config['debug'] ){
-			echo "<pre>";
-			print_r( $_SESSION );
-			echo "</pre>";
-		}
-
-		if ( isset($_SESSION['cart_content'] ) ) {
-			if( strlen( $_SESSION['cart_content'] ) < 1 ){
-				unset( $_SESSION['cart_content'] );
-			}
-		}
-
-		if ( isset($_GET['remove']) ){
-			echo 'Triggered';
-			$_SESSION['cart_content'] = preg_replace('/'.$_GET['pid'].'/', '', $_SESSION['cart_content'], 1);
-			$_SESSION['cart_content'] = preg_replace('/,,/', ',', $_SESSION['cart_content'], 1);
-			$_SESSION['cart_content'] = trim( $_SESSION['cart_content'], "," );
-			header('location: cart.php');
-		}
-
-		if( isset($_GET['pid']) && !isset( $_GET['remove'] ) ){
-			if( !isset( $_SESSION['cart_content'] ) ){
-				$_SESSION['cart_content'] = $_GET['pid'];
-			} else {
-				$_SESSION['cart_content'] .= ',';
-				$_SESSION['cart_content'] .= $_GET['pid'];
-			}
-		}
-
-		/*
-		if( $database_config['debug'] ){
-			echo "<pre>";
-			print_r( $_SESSION );
-			echo "</pre>";
-		}
-		*/
-		?>
-		<?php
 		if ( isset($_SESSION['cart_content']) ) {
 			$cart_array = explode( ',', $_SESSION['cart_content'] );
 			
-			/*
 			if( $database_config['debug'] ){
 				echo "<pre>";
 				print_r( $cart_array );
 				echo "</pre>";
 			}
-			*/
-
 			foreach ($cart_array as $item) {
 				$query = "SELECT * FROM cart_producten WHERE `Id`='".$item."' ";
 				//try to execute the SQL query
@@ -86,19 +72,22 @@
 				<?php
 			}
 		}
+
 		?>
+
 	</div>
+
 	<div class="row">
-		<form class="bestelling.php" method="POST">
+		<form action="bestelling.php" method="POST">
 			<div class="form-group">
-				<input placeholder="Naam" type="text" name="Naam">
-				<input placeholder="Email" type="email" name="Email">
+				<input required placeholder="Naam" type="text" name="Naam">
+				<input required placeholder="Email" type="email" name="Email">
 				<input class="btn btn-default" type="submit" value="Order">
 			</div>
 		</form>
 	</div>
+
+
 </div>
 
-<?php 
-	include_once 'includes/footer.php';
-?>
+<?php include_once 'includes/footer.php';?>
