@@ -14,12 +14,8 @@
 		</div>
 	</div>
 	<div class="parallax__group group2">
-		<div class="parallax__layer parallax__layer--base">
-			<div class="title">Hi</div>
-		</div>
-		<div class="parallax__layer parallax__layer--back">
-			<div class="title">Base</div>
-		</div>
+		<div class="parallax__layer parallax__layer--base">		</div>
+		<div class="parallax__layer parallax__layer--back">		</div>
 	</div>
 	<div class="parallax__group group3">
 		<div class="parallax__layer parallax__layer--base">

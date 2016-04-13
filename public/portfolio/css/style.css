@@ -138,11 +138,13 @@ body, html{
 	background-color: #3687C0;
 }
 .group2 .parallax__layer--base{
-	background: url('./media/parallaxFront.png');
+	background: url('../media/parallaxFront.png') center center no-repeat;
+	background-size: contain;
 }
 .group2 .parallax__layer--back{
 	background-color: #258BD3;
-	background: url('./media/parallaxBack.png');
+	background: url('../media/parallaxBack.png') center center no-repeat;
+	background-size: contain;
 }
 .group3 .parallax__layer--base{
 	background-color: #25CDD3;
