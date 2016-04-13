@@ -11,7 +11,7 @@
 					Are you sure you want to continue?
 				</p>
 				<div class="action-wrapper">
-					<a href="index.php" class="cd-btn main-action">Continue</a>
+					<a href="home.php" class="cd-btn main-action">Continue</a>
 					<a href="loser.php" class="cd-btn">Actually i dont want to be here!</a>
 				</div>
 			</div>
